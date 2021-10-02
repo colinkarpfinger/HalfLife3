@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://ParticleSpawner.tscn" type="PackedScene" id=1]
+[ext_resource path="res://SlowZone.gd" type="Script" id=2]
+[ext_resource path="res://icon.png" type="Texture" id=3]
+
+[sub_resource type="PhysicsMaterial" id=3]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 300 )
+
+[sub_resource type="PhysicsMaterial" id=4]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 512, 10 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 89.34
+
+[node name="Main" type="Node2D"]
+
+[node name="ParticleSpawner" parent="." instance=ExtResource( 1 )]
+numToSpawn = 50
+spawnVelocityMagnitude = 200
+
+[node name="Wall Right" type="StaticBody2D" parent="."]
+position = Vector2( 1024, 300 )
+physics_material_override = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall Right"]
+shape = SubResource( 1 )
+
+[node name="Wall Left" type="StaticBody2D" parent="."]
+position = Vector2( 0, 300 )
+physics_material_override = SubResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall Left"]
+shape = SubResource( 1 )
+
+[node name="Wall Bottom" type="StaticBody2D" parent="."]
+position = Vector2( 512, 600 )
+physics_material_override = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall Bottom"]
+shape = SubResource( 2 )
+
+[node name="Wall Top" type="StaticBody2D" parent="."]
+position = Vector2( 512, 0 )
+physics_material_override = SubResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall Top"]
+shape = SubResource( 2 )
+
+[node name="Slow Zone" type="Area2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slow Zone"]
+position = Vector2( 513.73, 291.67 )
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Slow Zone"]
+position = Vector2( 514.208, 293.052 )
+scale = Vector2( 2.80004, 2.6161 )
+z_index = -20
+texture = ExtResource( 3 )
+
+[connection signal="body_entered" from="Slow Zone" to="Slow Zone" method="_on_Slow_Zone_body_entered"]
+[connection signal="body_exited" from="Slow Zone" to="Slow Zone" method="_on_Slow_Zone_body_exited"]
