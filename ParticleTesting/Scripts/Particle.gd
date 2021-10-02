@@ -2,7 +2,9 @@ extends RigidBody2D
 
 class_name Particle
 
-var collisionSpeedUp = 5
+export (float) var collisionSpeedUp = 10
+export (float) var slowedDamp = 2
+var slowed = false
 
 
 # Declare member variables here. Examples:
@@ -19,6 +21,13 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func _physics_process(_delta):
+	if slowed: 
+		linear_damp = slowedDamp
+		slowed = false
+	else: 
+		linear_damp = 0
+
 
 func _on_Particle_body_exited(body):
 	if body is RigidBody2D : 
@@ -32,3 +41,7 @@ func _on_Particle_body_entered(body):
 	var bodyRB : RigidBody2D = body
 	var velocityDirection = bodyRB.linear_velocity.normalized()
 	bodyRB.apply_impulse(Vector2(0,0), velocityDirection * collisionSpeedUp)
+
+func _slow():
+	slowed = true
+

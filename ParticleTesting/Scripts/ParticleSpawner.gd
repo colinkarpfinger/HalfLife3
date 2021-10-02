@@ -3,7 +3,7 @@ export var numToSpawn = 200
 export var spawnVelocityMagnitude = 50
 export var maxRotationSpeed = 2
 
-const Particle = preload("res://Particle.tscn")
+const Particle = preload("res://Subscenes/Particle.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
