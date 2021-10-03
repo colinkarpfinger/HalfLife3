@@ -92,5 +92,4 @@ shape = SubResource( 4 )
 
 [node name="Hearts" type="Node2D" parent="."]
 script = ExtResource( 1 )
-
 [connection signal="player_hit" from="Player" to="Hearts" method="_on_Player_player_hit"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/MatchRotation.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Particle.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Images/yellow_blink_Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Images/yellow.png" type="Texture" id=5]
 [ext_resource path="res://Images/yellow_shadow.png" type="Texture" id=6]
+[ext_resource path="res://Audio/Effects/wobble_test.wav" type="AudioStream" id=7]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -72,4 +73,8 @@ script = ExtResource( 3 )
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource( 7 )
 
+[node name="CollisionAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -6.0
+bus = "Collisions"
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]

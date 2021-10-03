@@ -8,6 +8,7 @@ var sprite = null
 export (float) var collisionSpeedUp = 50
 export (float) var slowedDamp = 2
 export (float) var max_speed = 1000
+export (float) var max_speed_for_audio = 200
 export (float) var start_scale = 1
 export (int) var startingHealth = 600
 export (float) var shakeAmount = 6
@@ -86,6 +87,28 @@ func _on_Particle_body_exited(body):
 		var bodyRB : RigidBody2D = body
 		var velocityDirection = bodyRB.linear_velocity.normalized()
 		bodyRB.apply_impulse(Vector2(0,0), velocityDirection * collisionSpeedUp)
+		
+	var selfRB : RigidBody2D = self
+	
+	var speedFrac = 0
+	if body is RigidBody2D : 
+		var bodyRB : RigidBody2D = body
+		var relativeSpeed = (selfRB.linear_velocity - bodyRB.linear_velocity).length()
+		speedFrac = relativeSpeed / (2*max_speed_for_audio)
+	else:
+		speedFrac = selfRB.linear_velocity.length() / max_speed_for_audio
+		
+	playCollisionAudio(speedFrac)
+
+func playCollisionAudio(rawSpeedFrac: float):
+	var playbackPosition = $CollisionAudio.get_playback_position()
+	if playbackPosition == 0 or playbackPosition > 0.1:
+		var speedFrac = min(1, max(0, rawSpeedFrac)) # bounding for safety
+		if speedFrac > 0.01: # avoid playing any sound for really light collisions
+			# collision energy proportional to square of relative velocity
+			var speedFracSq = speedFrac*speedFrac
+			$CollisionAudio.volume_db = log(speedFracSq) - 6
+			$CollisionAudio.play()
 
 
 
