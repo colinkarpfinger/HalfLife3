@@ -53,6 +53,8 @@ func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:
 	particle.set_position(position)
 	particle.linear_velocity = velocity
 	particle.mass = mass
+	particle.state = state
+#	particle.spawnTime = OS.get_ticks_msec()
 	return particle
 	
 const center = Vector2(512, 300)
@@ -62,7 +64,7 @@ func spawn_in_center_at_angle(degrees: float):
 	
 	initialVelocity = initialVelocity.rotated(degrees)
 	var offset = Vector2(spawn_distance, 0).rotated(degrees)
-	var particle = spawn_particle(center + offset, initialVelocity, 1, 1, randi() % 3, 0)
+	var particle = spawn_particle(center + offset, initialVelocity, 1, 1, randi() % 3, Particle.states.INACTIVE)
 	var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
 	particle.angular_velocity = maxRotationSpeed
 	

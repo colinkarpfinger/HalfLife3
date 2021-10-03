@@ -2,17 +2,25 @@ extends RigidBody2D
 
 class_name Particle
 
+var animatedSprite = null
+var sprite = null
 
-export (float) var collisionSpeedUp = 1
+export (float) var collisionSpeedUp = 50
 export (float) var slowedDamp = 2
 export (float) var max_speed = 1000
 export (float) var start_scale = 1
+export (int) var startingHealth = 600
+export (float) var shakeAmount = 6
+
+onready var RNG = RandomNumberGenerator.new()
+var spawnTime = 0
 var slowed = false
 var decayLevel = 1
 var decayLevelMax = 4
 var absoluteScale = 1
 var decayOffset = 80
 var numParticlesOnDecay = 2
+var health = startingHealth
 
 enum colors {RED, YELLOW, GREEN}
 
@@ -24,17 +32,31 @@ var color = colors.RED
 # var a = 2
 # var b = "text"
 
-const scales = [0.5, 0.35, 0.75, 0.5]
+const spriteScales = [0.5, 0.35, 0.75, 0.5]
+const globalScales = [1.0, 0.75, 0.5, 0.25]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	setScale(scales[decayLevel - 1])
-	pass # Replace with function body.
+#	health *= globalScales[decayLevel - 1]
+	RNG.randomize()
+	animatedSprite = get_node("Sprites/AnimatedSprite")
+	sprite = get_node("Sprites/Sprite")
+	setScale(spriteScales[decayLevel - 1])
+	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func _process(_delta):
+	if state == states.ACTIVE && decayLevel < 4: 
+		health -= 1 
+	var shakeRange = 1 - max(0, health/startingHealth)
+	var shakeScale = globalScales[decayLevel - 1]
+	var x_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
+	var y_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
+	var shakeVector = Vector2(x_shake, y_shake)
+	animatedSprite.offset = shakeVector
+	sprite.offset = shakeVector
+
 
 
 func setScale(_scale):
@@ -47,11 +69,13 @@ func setScale(_scale):
 func _physics_process(_delta):
 	if slowed: 
 		linear_damp = slowedDamp
+		angular_damp = slowedDamp
 		slowed = false
 	else: 
 		linear_damp = 0
+		angular_damp = slowedDamp
 	
-	if state == states.ACTIVE and rand_range(0, 100 / _delta) <= 1:
+	if state == states.ACTIVE and health <= 0:  #and rand_range(0, 100 / _delta) <= 1:
 		decay()
 	linear_velocity = linear_velocity.clamped(max_speed)
 
@@ -84,10 +108,13 @@ func decay():
 				mass,
 				decayLevel + 1,
 				color,
-				1
+				states.ACTIVE
 			)
 	queue_free()
 
-func _slow():
-	slowed = true
+func _slow(beamStrength):
+	if state == states.ACTIVE:
+		health -= beamStrength / globalScales[decayLevel - 1]
+#		print(health)
+		slowed = true
 

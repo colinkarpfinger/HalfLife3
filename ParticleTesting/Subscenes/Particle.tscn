@@ -2,17 +2,17 @@
 
 [ext_resource path="res://Scripts/Particle.gd" type="Script" id=2]
 
-[sub_resource type="PhysicsMaterial" id=5]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 bounce = 2.0
 
-[sub_resource type="CircleShape2D" id=6]
+[sub_resource type="CircleShape2D" id=2]
 radius = 10.1083
 
 [node name="Particle" type="RigidBody2D" groups=[
 "Particle",
 ]]
-physics_material_override = SubResource( 5 )
+physics_material_override = SubResource( 1 )
 gravity_scale = 0.0
 contacts_reported = 2
 contact_monitor = true
@@ -22,6 +22,6 @@ script = ExtResource( 2 )
 slowedDamp = 3.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 6 )
+shape = SubResource( 2 )
 
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]
