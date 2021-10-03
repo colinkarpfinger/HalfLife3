@@ -54,6 +54,7 @@ slowedDamp = 3.0
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Sprites"]
+visible = false
 position = Vector2( -4, 4 )
 texture = ExtResource( 5 )
 script = ExtResource( 1 )
@@ -61,7 +62,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Sprites"]
 frames = SubResource( 5 )
 animation = "blink"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 6 )
 

@@ -49,4 +49,5 @@ func update_walls_open(walls_opened: bool):
 
 func _on_Area2D_body_exited(body):
 	if body.is_in_group("Particle"):
-		body.state = Particle.states.ACTIVE
+		if body.state == Particle.states.INACTIVE:
+			body.state = Particle.states.ACTIVE 
