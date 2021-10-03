@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Hearts.gd" type="Script" id=1]
 [ext_resource path="res://Subscenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Images/background.png" type="Texture" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -20,6 +21,15 @@ extents = Vector2( 648.83, 81.3755 )
 
 [node name="Main" type="Node2D"]
 scale = Vector2( 1.11549, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1800.0
+margin_bottom = 1200.0
+rect_scale = Vector2( 0.52, 0.52 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ParticleSpawner" parent="." groups=[
 "BouncyParticles",
