@@ -1,10 +1,10 @@
 extends Node2D
 export var numToSpawn = 200
-export var spawnVelocityMagnitude = 50
+export var spawnVelocityMagnitude = 10
 export var maxRotationSpeed = 2
 export var particleScale = 1
-export var spawn_distance = 50
-export var spawn_time = 2
+export var spawn_distance = 15
+export var spawn_time = 6
 
 const Particle = preload("res://Scripts/Particle.gd")
 
@@ -29,7 +29,7 @@ func _ready():
 	for n in range(0, numToSpawn):
 		spawn_in_center_at_angle(n * angle_delta)
 
-func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:int, color: int):
+func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:int, color: int, state: int):
 	var particle_type = sprites_large[color] if decay_level <= 2 else sprites_small[color]
 	var particle = particle_type.instance()
 	particle.color = color
@@ -47,7 +47,7 @@ func spawn_in_center_at_angle(degrees: float):
 	
 	initialVelocity = initialVelocity.rotated(degrees)
 	var offset = Vector2(spawn_distance, 0).rotated(degrees)
-	var particle = spawn_particle(center + offset, initialVelocity, 1, 1, randi() % 3)
+	var particle = spawn_particle(center + offset, initialVelocity, 1, 1, randi() % 3, 0)
 	var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
 	particle.angular_velocity = maxRotationSpeed
 	

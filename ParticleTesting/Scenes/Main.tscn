@@ -1,76 +1,21 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Hearts.gd" type="Script" id=1]
 [ext_resource path="res://Subscenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Images/background.png" type="Texture" id=4]
-[ext_resource path="res://Images/reactor.png" type="Texture" id=5]
-[ext_resource path="res://Images/reactor2.png" type="Texture" id=6]
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 5 )
-region = Rect2( 155, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 5 )
-region = Rect2( 310, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 5 )
-region = Rect2( 465, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 5 )
-region = Rect2( 620, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 5 )
-region = Rect2( 775, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 5 )
-region = Rect2( 930, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 5 )
-region = Rect2( 1085, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 5 )
-region = Rect2( 1240, 0, 155, 155 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 5 )
-region = Rect2( 1395, 0, 155, 155 )
-
-[sub_resource type="SpriteFrames" id=15]
-animations = [ {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
-"loop": true,
-"name": "default",
-"speed": 8.0
-} ]
+[ext_resource path="res://Subscenes/Reactor.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=16]
-extents = Vector2( 82.153, 8.167 )
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 75.2194, 300 )
 
 [sub_resource type="PhysicsMaterial" id=3]
 friction = 0.0
 bounce = 1.0
-
-[sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 85.447, 8.70796 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 75.2194, 300 )
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 648.83, 81.3755 )
@@ -87,70 +32,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Reactor" type="Node2D" parent="."]
-position = Vector2( 475.503, 306.936 )
-scale = Vector2( 1.5, 1.5 )
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Reactor"]
-position = Vector2( -2.37051, 5.01057 )
-frames = SubResource( 15 )
-frame = 6
-playing = true
-
-[node name="Sprite" type="Sprite" parent="Reactor"]
-position = Vector2( -2.37051, 1.2128 )
-texture = ExtResource( 6 )
-
-[node name="ReactorWalls" type="Node2D" parent="Reactor"]
-position = Vector2( -317.002, -204.624 )
-scale = Vector2( 0.666667, 0.666667 )
-
-[node name="Wall Right" type="StaticBody2D" parent="Reactor/ReactorWalls"]
-position = Vector2( 552.021, 301.765 )
-collision_layer = 3
-collision_mask = 3
-physics_material_override = SubResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Reactor/ReactorWalls/Wall Right"]
-position = Vector2( -0.520081, 5.51108 )
-rotation = 1.5708
-shape = SubResource( 16 )
-one_way_collision = true
-
-[node name="Wall Left" type="StaticBody2D" parent="Reactor/ReactorWalls"]
-position = Vector2( 474.089, 294.303 )
-collision_layer = 3
-collision_mask = 3
-physics_material_override = SubResource( 3 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Reactor/ReactorWalls/Wall Left"]
-position = Vector2( -75.9275, 12.4724 )
-rotation = -1.5708
-shape = SubResource( 16 )
-one_way_collision = true
-
-[node name="Wall Bottom" type="StaticBody2D" parent="Reactor/ReactorWalls"]
-position = Vector2( 483.061, 313.267 )
-collision_layer = 3
-collision_mask = 3
-physics_material_override = SubResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Reactor/ReactorWalls/Wall Bottom"]
-position = Vector2( -7.55756, -81.6927 )
-shape = SubResource( 17 )
-one_way_collision = true
-
-[node name="Wall Top" type="StaticBody2D" parent="Reactor/ReactorWalls"]
-position = Vector2( 479.656, 279.137 )
-collision_layer = 3
-collision_mask = 3
-physics_material_override = SubResource( 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Reactor/ReactorWalls/Wall Top"]
-position = Vector2( -4.77734, 104.126 )
-rotation = 3.14159
-shape = SubResource( 17 )
-one_way_collision = true
+[node name="Reactor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 300 )
 
 [node name="ParticleSpawner" parent="." groups=[
 "BouncyParticles",
