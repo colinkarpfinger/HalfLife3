@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
+[ext_resource path="res://Scripts/Hearts.gd" type="Script" id=1]
 [ext_resource path="res://Subscenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/Hearts.gd" type="Script" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -73,4 +73,6 @@ position = Vector2( 1.42303, -49.2094 )
 shape = SubResource( 4 )
 
 [node name="Hearts" type="Node2D" parent="."]
-script = ExtResource( 6 )
+script = ExtResource( 1 )
+
+[connection signal="player_hit" from="Player" to="Hearts" method="_on_Player_player_hit"]
