@@ -35,10 +35,10 @@ func _process(delta):
 
 func update_walls_open(walls_opened: bool):
 	if walls_open:
-		$WallSprite.set_modulate(Color(0.15, 0.15, 0.15, 0.5))
+		$WallSprite.set_modulate(Color(1, 1, 1, 0.5))
 		$WallSprite.set_animation('open')
 	else:
-		$WallSprite.set_modulate(Color(0.15, 0.15, 0.15, 1))
+		$WallSprite.set_modulate(Color(1, 1, 1, 1))
 		$WallSprite.set_animation('closed')
 	$Walls/Left/Collider.one_way_collision = walls_opened
 	$Walls/Right/Collider.one_way_collision = walls_opened
