@@ -6,8 +6,19 @@ export var particleScale = 1
 export var spawn_distance = 50
 export var spawn_time = 2
 
-const Particle = preload("res://Subscenes/Particle.tscn")
+const Particle = preload("res://Scripts/Particle.gd")
 
+const sprites_large = {
+	Particle.colors.RED: preload("res://Subscenes/Particles/Red.tscn"),
+	Particle.colors.YELLOW: preload("res://Subscenes/Particles/Yellow.tscn"),
+	Particle.colors.GREEN: preload("res://Subscenes/Particles/Green.tscn"),
+}
+
+const sprites_small = {
+	Particle.colors.RED: preload("res://Subscenes/Particles/RedSmall.tscn"),
+	Particle.colors.YELLOW: preload("res://Subscenes/Particles/YellowSmall.tscn"),
+	Particle.colors.GREEN: preload("res://Subscenes/Particles/GreenSmall.tscn"),
+}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -18,17 +29,15 @@ func _ready():
 	for n in range(0, numToSpawn):
 		spawn_in_center_at_angle(n * angle_delta)
 
-					
-	
-
-func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vector2, mass:float, _scale:float, decay_level:int):
-	var particle = Particle.instance()
+func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:int, color: int):
+	var particle_type = sprites_large[color] if decay_level <= 2 else sprites_small[color]
+	var particle = particle_type.instance()
+	particle.color = color
+	particle.decayLevel = decay_level
 	add_child(particle)
 	particle.set_position(position)
 	particle.linear_velocity = velocity
 	particle.mass = mass
-	particle.decayLevel = decay_level
-	particle.setScale(_scale)
 	return particle
 	
 const center = Vector2(512, 300)
@@ -38,7 +47,7 @@ func spawn_in_center_at_angle(degrees: float):
 	
 	initialVelocity = initialVelocity.rotated(degrees)
 	var offset = Vector2(spawn_distance, 0).rotated(degrees)
-	var particle = spawn_at_position_with_velocity_mass_scale(center + offset, initialVelocity, 1, 1, 1)
+	var particle = spawn_particle(center + offset, initialVelocity, 1, 1, randi() % 3)
 	var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
 	particle.angular_velocity = maxRotationSpeed
 	
