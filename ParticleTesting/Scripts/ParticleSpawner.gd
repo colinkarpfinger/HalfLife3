@@ -3,32 +3,22 @@ export var numToSpawn = 200
 export var spawnVelocityMagnitude = 50
 export var maxRotationSpeed = 2
 export var particleScale = 1
+export var spawn_distance = 50
+export var spawn_time = 2
 
 const Particle = preload("res://Subscenes/Particle.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	
-	for n in numToSpawn:
-		randomize()
-		
-		var xPos = rand_range(0, get_viewport().size.x)
-		var yPos = rand_range(0, get_viewport().size.y)
-		
-		var initialVelocity = Vector2(spawnVelocityMagnitude,0)
-		var randomRotationDegrees = rand_range(0,360)
-		initialVelocity = initialVelocity.rotated(randomRotationDegrees)
-					
-		var particle = spawn_at_position_with_velocity_mass_scale(Vector2(xPos,yPos), initialVelocity, 1, particleScale, 1)
-		var particleTyped : Particle = particle
-		particleTyped.setScale(particleScale)
+	$Timer.wait_time = spawn_time
 
-		var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
-						
-		
-		#particle.apply_torque_impulse(maxRotationSpeed * randomRotationDirection)
-		particle.angular_velocity = maxRotationSpeed
-		
+	var angle_delta = 360 / max(numToSpawn - 1, 1)
+	for n in range(0, numToSpawn):
+		spawn_in_center_at_angle(n * angle_delta)
+
+					
 	
 
 func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vector2, mass:float, _scale:float, decay_level:int):
@@ -40,10 +30,24 @@ func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vecto
 	particle.decayLevel = decay_level
 	particle.setScale(_scale)
 	return particle
+	
+const center = Vector2(512, 300)
 
+func spawn_in_center_at_angle(degrees: float):
+	var initialVelocity = Vector2(spawnVelocityMagnitude, 0)
+	
+	initialVelocity = initialVelocity.rotated(degrees)
+	var offset = Vector2(spawn_distance, 0).rotated(degrees)
+	var particle = spawn_at_position_with_velocity_mass_scale(center + offset, initialVelocity, 1, 1, 1)
+	var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
+	particle.angular_velocity = maxRotationSpeed
+	
+func _on_Timer_timeout():
 
-
-
+	var randomRotationDegrees = rand_range(0,360)
+	spawn_in_center_at_angle(randomRotationDegrees)
+		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+

@@ -5,6 +5,7 @@ class_name Particle
 
 export (float) var collisionSpeedUp = 1
 export (float) var slowedDamp = 2
+export (float) var max_speed = 1000
 var slowed = false
 var decayLevel = 1
 var decayLevelMax = 3
@@ -43,6 +44,8 @@ func _physics_process(_delta):
 		linear_damp = 0
 	if rand_range(0, 10 / _delta) <= 1:
 		decay()
+	linear_velocity = linear_velocity.clamped(max_speed)
+
 
 
 func _on_Particle_body_exited(body):
