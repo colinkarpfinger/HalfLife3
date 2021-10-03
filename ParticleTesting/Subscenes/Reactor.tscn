@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Images/reactor.png" type="Texture" id=1]
-[ext_resource path="res://Images/reactor2.png" type="Texture" id=2]
+[ext_resource path="res://Images/reactor_effect_Sheet.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Reactor.gd" type="Script" id=3]
+[ext_resource path="res://Images/reactor3.png" type="Texture" id=4]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -52,38 +53,50 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="AtlasTexture" id=19]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 155, 155 )
 
-[sub_resource type="SpriteFrames" id=20]
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 155, 0, 155, 155 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 310, 0, 155, 155 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 465, 0, 155, 155 )
+
+[sub_resource type="SpriteFrames" id=16]
 animations = [ {
-"frames": [ SubResource( 19 ), null ],
-"loop": true,
-"name": "open",
-"speed": 3.0
-}, {
-"frames": [ SubResource( 19 ) ],
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
 "loop": true,
 "name": "closed",
 "speed": 10.0
+}, {
+"frames": [ ExtResource( 4 ), null ],
+"loop": true,
+"name": "open",
+"speed": 3.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=21]
+[sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 55.8455, 55.9556 )
 
-[sub_resource type="PhysicsMaterial" id=22]
+[sub_resource type="PhysicsMaterial" id=18]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=16]
+[sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 82.153, 8.167 )
 
-[sub_resource type="PhysicsMaterial" id=17]
+[sub_resource type="PhysicsMaterial" id=20]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=18]
+[sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 85.447, 8.70796 )
 
 [node name="Reactor" type="Node2D"]
@@ -92,20 +105,23 @@ scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 3 )
 
 [node name="ReactionSprite" type="AnimatedSprite" parent="."]
+visible = false
 position = Vector2( -2.37051, 5.01057 )
 frames = SubResource( 11 )
+frame = 2
 playing = true
 
 [node name="WallSprite" type="AnimatedSprite" parent="."]
-position = Vector2( -2.32518, 0.387522 )
-frames = SubResource( 20 )
+position = Vector2( -2.32518, 0.25949 )
+frames = SubResource( 16 )
 animation = "closed"
+frame = 3
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 21 )
+shape = SubResource( 17 )
 
 [node name="Walls" type="Node2D" parent="."]
 scale = Vector2( 0.666667, 0.666667 )
@@ -114,47 +130,47 @@ scale = Vector2( 0.666667, 0.666667 )
 position = Vector2( 76.5182, -5.17081 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 22 )
+physics_material_override = SubResource( 18 )
 
 [node name="Collider" type="CollisionShape2D" parent="Walls/Right"]
 position = Vector2( -0.520081, 5.51108 )
 rotation = 1.5708
-shape = SubResource( 16 )
+shape = SubResource( 19 )
 one_way_collision = true
 
 [node name="Left" type="StaticBody2D" parent="Walls"]
 position = Vector2( -1.41382, -12.6328 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 17 )
+physics_material_override = SubResource( 20 )
 
 [node name="Collider" type="CollisionShape2D" parent="Walls/Left"]
 position = Vector2( -75.9275, 12.4724 )
 rotation = -1.5708
-shape = SubResource( 16 )
+shape = SubResource( 19 )
 one_way_collision = true
 
 [node name="Bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2( 7.5582, 6.33118 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 22 )
+physics_material_override = SubResource( 18 )
 
 [node name="Collider" type="CollisionShape2D" parent="Walls/Bottom"]
 position = Vector2( -7.55756, -81.6927 )
-shape = SubResource( 18 )
+shape = SubResource( 21 )
 one_way_collision = true
 
 [node name="Top" type="StaticBody2D" parent="Walls"]
 position = Vector2( 4.1532, -27.7988 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 22 )
+physics_material_override = SubResource( 18 )
 
 [node name="Collider" type="CollisionShape2D" parent="Walls/Top"]
 position = Vector2( -4.77734, 104.126 )
 rotation = 3.14159
-shape = SubResource( 18 )
+shape = SubResource( 21 )
 one_way_collision = true
 
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
