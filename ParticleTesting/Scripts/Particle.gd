@@ -67,7 +67,7 @@ func decay():
 	var base_offset = linear_velocity.normalized() * decayOffset
 	
 	var angle_delta = 2 * PI / numParticlesOnDecay
-	if decayLevel <= decayLevelMax:
+	if decayLevel < decayLevelMax:
 		for i in range(0, numParticlesOnDecay):
 			var new_angle = angle_delta * i + linear_velocity.angle()
 			var offset = base_offset.normalized().rotated(new_angle) * scale
