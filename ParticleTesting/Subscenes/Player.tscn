@@ -70,12 +70,12 @@ scale = Vector2( 0.5, 0.5 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 3 )
+beamPath = NodePath("Beam")
 accel_speed = 40.0
 max_speed = 300.0
 drag = 10.0
 idleAnimCutoff = 100.0
 animFramerate = 5.0
-beamPath = NodePath("Beam")
 
 [node name="HitDetector" type="Area2D" parent="."]
 
@@ -84,6 +84,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 12 )
+frame = 1
 speed_scale = 2.0
 playing = true
 

@@ -8,7 +8,7 @@ func _ready():
 	for i in range(heartsAmt):
 		var heartSprite = Sprite.new();
 		heartSprite.texture = heart
-		heartSprite.transform.origin = Vector2( 20 + 35 * i, 20)
+		heartSprite.transform.origin = Vector2(20 + 35 * i, 20)
 		add_child(heartSprite)
 
 

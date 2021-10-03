@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/MatchRotation.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Particle.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/SpinForever.gd" type="Script" id=3]
+[ext_resource path="res://Images/X_small.png" type="Texture" id=4]
+[ext_resource path="res://Images/X_small_shadow.png" type="Texture" id=5]
+
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.0
+bounce = 2.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 15.4307
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="YellowSmall" type="RigidBody2D" groups=[
+"Particle",
+]]
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.0
+contacts_reported = 2
+contact_monitor = true
+linear_damp = 0.0
+angular_damp = 0.0
+script = ExtResource( 2 )
+slowedDamp = 3.0
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Sprites"]
+position = Vector2( -2, 2 )
+texture = ExtResource( 5 )
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Sprites"]
+frames = SubResource( 3 )
+script = ExtResource( 3 )
+
+[connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]
