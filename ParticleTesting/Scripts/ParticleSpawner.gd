@@ -2,6 +2,7 @@ extends Node2D
 export var numToSpawn = 200
 export var spawnVelocityMagnitude = 50
 export var maxRotationSpeed = 2
+export var particleScale = 1
 export var spawn_distance = 50
 export var spawn_time = 2
 
@@ -18,15 +19,16 @@ func _ready():
 		spawn_in_center_at_angle(n * angle_delta)
 
 					
-
 	
 
-func spawn_at_position_with_velocity(position:Vector2, velocity:Vector2):
+func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vector2, mass:float, _scale:float, decay_level:int):
 	var particle = Particle.instance()
 	add_child(particle)
 	particle.set_position(position)
 	particle.linear_velocity = velocity
-	
+	particle.mass = mass
+	particle.decayLevel = decay_level
+	particle.setScale(_scale)
 	return particle
 	
 const center = Vector2(512, 300)
@@ -36,7 +38,7 @@ func spawn_in_center_at_angle(degrees: float):
 	
 	initialVelocity = initialVelocity.rotated(degrees)
 	var offset = Vector2(spawn_distance, 0).rotated(degrees)
-	var particle = spawn_at_position_with_velocity(center + offset, initialVelocity)
+	var particle = spawn_at_position_with_velocity_mass_scale(center + offset, initialVelocity, 1, 1, 1)
 	var randomRotationDirection =  1 if rand_range(-1,1) > 0 else -1
 	particle.angular_velocity = maxRotationSpeed
 	
