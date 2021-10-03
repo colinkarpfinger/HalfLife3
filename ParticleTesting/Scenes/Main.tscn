@@ -4,18 +4,18 @@
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Hearts.gd" type="Script" id=6]
 
-[sub_resource type="PhysicsMaterial" id=2]
+[sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 75.2194, 300 )
 
-[sub_resource type="PhysicsMaterial" id=4]
+[sub_resource type="PhysicsMaterial" id=3]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 648.83, 81.3755 )
 
 [node name="Main" type="Node2D"]
@@ -36,41 +36,41 @@ position = Vector2( 374.602, 319.855 )
 position = Vector2( 1024, 300 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Right"]
 position = Vector2( 60.9917, 2.51981 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="Wall Left" type="StaticBody2D" parent="Walls"]
 position = Vector2( 0, 300 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 4 )
+physics_material_override = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Left"]
 position = Vector2( -59.7682, 19.0488 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="Wall Bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 600 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Bottom"]
 position = Vector2( -5.64743, 66.7758 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Wall Top" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 0 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 2 )
+physics_material_override = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Top"]
 position = Vector2( 1.42303, -49.2094 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="Hearts" type="Node2D" parent="."]
 script = ExtResource( 6 )
