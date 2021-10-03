@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/Hearts.gd" type="Script" id=1]
 [ext_resource path="res://Subscenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Images/background.png" type="Texture" id=4]
+[ext_resource path="res://Subscenes/Reactor.tscn" type="PackedScene" id=5]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -31,6 +32,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Reactor" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 300 )
+
 [node name="ParticleSpawner" parent="." groups=[
 "BouncyParticles",
 ] instance=ExtResource( 3 )]
@@ -42,6 +46,9 @@ spawnVelocityMagnitude = 200
 position = Vector2( 374.602, 319.855 )
 
 [node name="Walls" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Wall Right" type="StaticBody2D" parent="Walls"]
 position = Vector2( 1024, 300 )

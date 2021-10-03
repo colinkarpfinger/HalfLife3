@@ -16,6 +16,9 @@ var numParticlesOnDecay = 2
 
 enum colors {RED, YELLOW, GREEN}
 
+enum states {ACTIVE, INACTIVE}
+
+var state = states.INACTIVE
 var color = colors.RED
 # Declare member variables here. Examples:
 # var a = 2
@@ -25,7 +28,6 @@ const scales = [0.5, 0.35, 0.75, 0.5]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	setScale(scales[decayLevel - 1])
 	pass # Replace with function body.
 
@@ -48,7 +50,8 @@ func _physics_process(_delta):
 		slowed = false
 	else: 
 		linear_damp = 0
-	if rand_range(0, 100 / _delta) <= 1:
+	
+	if state == states.ACTIVE and rand_range(0, 100 / _delta) <= 1:
 		decay()
 	linear_velocity = linear_velocity.clamped(max_speed)
 
@@ -67,7 +70,7 @@ func decay():
 	var base_offset = linear_velocity.normalized() * decayOffset
 	
 	var angle_delta = 2 * PI / numParticlesOnDecay
-	if decayLevel <= decayLevelMax:
+	if decayLevel < decayLevelMax:
 		for i in range(0, numParticlesOnDecay):
 			var new_angle = angle_delta * i + linear_velocity.angle()
 			var offset = base_offset.normalized().rotated(new_angle) * scale
@@ -80,7 +83,8 @@ func decay():
 				new_velocity,
 				mass,
 				decayLevel + 1,
-				color
+				color,
+				1
 			)
 	queue_free()
 
