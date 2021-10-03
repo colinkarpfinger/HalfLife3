@@ -5,21 +5,21 @@
 [ext_resource path="res://Subscenes/ParticleSpawner.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/SlowZone.gd" type="Script" id=4]
 
-[sub_resource type="CircleShape2D" id=5]
+[sub_resource type="CircleShape2D" id=1]
 radius = 89.34
 
-[sub_resource type="PhysicsMaterial" id=1]
+[sub_resource type="PhysicsMaterial" id=2]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 10, 300 )
 
-[sub_resource type="PhysicsMaterial" id=3]
+[sub_resource type="PhysicsMaterial" id=4]
 friction = 0.0
 bounce = 1.0
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 512, 10 )
 
 [node name="Main" type="Node2D"]
@@ -28,7 +28,7 @@ scale = Vector2( 1.11549, 1 )
 [node name="ParticleSpawner" parent="." groups=[
 "BouncyParticles",
 ] instance=ExtResource( 3 )]
-numToSpawn = 50
+numToSpawn = 10
 spawnVelocityMagnitude = 200
 
 [node name="Slow Zone" type="Area2D" parent="."]
@@ -36,7 +36,7 @@ script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Slow Zone"]
 position = Vector2( 513.73, 291.67 )
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Slow Zone"]
 position = Vector2( 514.208, 293.052 )
@@ -53,37 +53,37 @@ position = Vector2( 374.602, 319.855 )
 position = Vector2( 1024, 300 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Right"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Wall Left" type="StaticBody2D" parent="Walls"]
 position = Vector2( 0, 300 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 3 )
+physics_material_override = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Left"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Wall Bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 600 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Bottom"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Wall Top" type="StaticBody2D" parent="Walls"]
 position = Vector2( 512, 0 )
 collision_layer = 3
 collision_mask = 3
-physics_material_override = SubResource( 1 )
+physics_material_override = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall Top"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [connection signal="body_entered" from="Slow Zone" to="Slow Zone" method="_on_Slow_Zone_body_entered"]
 [connection signal="body_exited" from="Slow Zone" to="Slow Zone" method="_on_Slow_Zone_body_exited"]
