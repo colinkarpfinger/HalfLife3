@@ -19,7 +19,7 @@ func _ready():
 		var randomRotationDegrees = rand_range(0,360)
 		initialVelocity = initialVelocity.rotated(randomRotationDegrees)
 					
-		var particle = spawn_at_position_with_velocity_mass_scale(Vector2(xPos,yPos), initialVelocity, 1, particleScale)
+		var particle = spawn_at_position_with_velocity_mass_scale(Vector2(xPos,yPos), initialVelocity, 1, particleScale, 1)
 		var particleTyped : Particle = particle
 		particleTyped.setScale(particleScale)
 
@@ -31,12 +31,13 @@ func _ready():
 		
 	
 
-func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vector2, mass:float, _scale:float):
+func spawn_at_position_with_velocity_mass_scale(position:Vector2, velocity:Vector2, mass:float, _scale:float, decay_level:int):
 	var particle = Particle.instance()
 	add_child(particle)
 	particle.set_position(position)
 	particle.linear_velocity = velocity
 	particle.mass = mass
+	particle.decayLevel = decay_level
 	particle.setScale(_scale)
 	return particle
 

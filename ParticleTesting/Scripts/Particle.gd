@@ -11,7 +11,7 @@ var decayLevelMax = 3
 var absoluteScale = 1
 var decayOffset = 80
 
-var numParticlesOnDecay = 1
+var numParticlesOnDecay = 2
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -20,6 +20,7 @@ var numParticlesOnDecay = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	pass # Replace with function body.
 
 
@@ -40,6 +41,8 @@ func _physics_process(_delta):
 		slowed = false
 	else: 
 		linear_damp = 0
+	if rand_range(0, 10 / _delta) <= 1:
+		decay()
 
 
 func _on_Particle_body_exited(body):
@@ -47,33 +50,35 @@ func _on_Particle_body_exited(body):
 		var bodyRB : RigidBody2D = body
 		var velocityDirection = bodyRB.linear_velocity.normalized()
 		bodyRB.apply_impulse(Vector2(0,0), velocityDirection * collisionSpeedUp)
-		decay()
+
 
 
 func decay():
-	decayLevel += 1
-	print("Particle: Decayed to: "+str(decayLevel))
-	if decayLevel >= decayLevelMax:		#destroy ? 
-		print("Particle: died")
-		queue_free()	# queue destroy node
-		return
 	
-	setScale(0.75)
-	#mass *= 0.5
+	print("Particle: Decayed to: " + str(decayLevel))
 	
-	for n in numParticlesOnDecay:
-		randomize()
-		var randAngle = rand_range(0,360)
-		var offset = linear_velocity.normalized().rotated(90)*decayOffset*scale
-		#var offset = Vector2(decayOffset, 0).rotated(randAngle)
-		print("Particle: spawning with scale: "+str(absoluteScale))
-		get_parent().call_deferred("spawn_at_position_with_velocity_mass_scale", position + offset, linear_velocity.rotated(10), mass, absoluteScale)
+	setScale(0.5)
 	
+	var base_offset = linear_velocity.normalized() * decayOffset
 	
-	
-	
-
-
+	var angle_delta = 2 * PI / numParticlesOnDecay
+	print(angle_delta)
+	if decayLevel <= decayLevelMax:
+		for i in range(0, numParticlesOnDecay):
+			var new_angle = angle_delta * i + linear_velocity.angle()
+			var offset = base_offset.normalized().rotated(new_angle) * scale
+			var new_velocity = linear_velocity.length() * Vector2.RIGHT.rotated(new_angle)
+			print(new_angle, '      ', new_velocity.angle())
+			print("Particle: spawning with scale: " + str(absoluteScale))
+			var particle = get_parent().call_deferred(
+				"spawn_at_position_with_velocity_mass_scale",
+				position + offset,
+				new_velocity,
+				mass,
+				absoluteScale,
+				decayLevel + 1
+			)
+	queue_free()
 
 func _slow():
 	slowed = true
