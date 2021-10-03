@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/MatchRotation.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Particle.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Images/red.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/SpinForever.gd" type="Script" id=5]
 [ext_resource path="res://Images/red_shadow.png" type="Texture" id=6]
+[ext_resource path="res://Audio/Effects/wobble_test.wav" type="AudioStream" id=7]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -64,4 +65,8 @@ script = ExtResource( 5 )
 [node name="Collider" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -3.77551, -51.525, 57.7589, 38.13, -57.7008, 40.1149 )
 
+[node name="CollisionAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -6.0
+bus = "Collisions"
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]
