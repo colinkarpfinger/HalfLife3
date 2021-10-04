@@ -8,7 +8,9 @@ export var spawn_time = 6
 
 export var starting_db = -80
 export var final_db = 0
+export var final_bells_db = -30
 export var fade_seconds = 8
+export var fade_seconds_bells = 16
 export var add_music_particle_threshold_1 = 5
 export var add_music_particle_threshold_2 = 10
 export var add_music_particle_threshold_3 = 20
@@ -81,9 +83,12 @@ func _on_Timer_timeout():
 func _process(delta):
 	# This is a waste of CPU but whatever
 	var db_step = (final_db - starting_db)*delta/fade_seconds
+	var db_step_bells = (0 + final_bells_db)*delta/fade_seconds_bells
 	if spawn_count >= add_music_particle_threshold_1:
 		var db = basic_drums.volume_db
 		basic_drums.volume_db = min(final_db, db+db_step)
+		var db_bells = jam_bells.volume_db
+		jam_bells.volume_db = max(final_bells_db, db_bells+db_step_bells)
 		
 	if spawn_count >= add_music_particle_threshold_2:
 		var db = snare_and_kick.volume_db
