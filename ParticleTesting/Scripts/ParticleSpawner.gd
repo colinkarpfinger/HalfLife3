@@ -1,4 +1,7 @@
 extends Node2D
+
+var timeMachine;
+
 export var numToSpawn = 200
 export var spawnVelocityMagnitude = 10
 export var maxRotationSpeed = 2
@@ -14,6 +17,8 @@ export var fade_seconds_bells = 16
 export var add_music_particle_threshold_1 = 5
 export var add_music_particle_threshold_2 = 10
 export var add_music_particle_threshold_3 = 20
+
+signal particle_fully_decayed
 
 const Particle = preload("res://Scripts/Particle.gd")
 
@@ -39,6 +44,8 @@ var snare_and_kick
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	timeMachine = get_node("../TimeMachine")
+
 	setup_audio()
 	randomize()
 	
@@ -60,6 +67,7 @@ func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:
 	particle.mass = mass
 	particle.state = state
 #	particle.spawnTime = OS.get_ticks_msec()
+	particle.connect("particle_fully_decayed", self, "_on_particle_fully_decayed")
 	return particle
 	
 const center = Vector2(512, 300)
@@ -74,11 +82,12 @@ func spawn_in_center_at_angle(degrees: float):
 	particle.angular_velocity = maxRotationSpeed
 	
 func _on_Timer_timeout():
-
 	var randomRotationDegrees = rand_range(0,360)
 	spawn_in_center_at_angle(randomRotationDegrees)
 	spawn_count += 1
 	
+func _on_particle_fully_decayed():
+	emit_signal("particle_fully_decayed")
 
 func _process(delta):
 	# This is a waste of CPU but whatever

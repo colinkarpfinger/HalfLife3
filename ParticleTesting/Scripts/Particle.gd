@@ -2,6 +2,8 @@ extends RigidBody2D
 
 class_name Particle
 
+signal collided
+
 var animatedSprite = null
 var sprite = null
 
@@ -9,10 +11,11 @@ export (float) var collisionSpeedUp = 50
 export (float) var slowedDamp = 2
 export (float) var max_speed = 1000
 export (float) var max_speed_for_audio = 200
-export (float) var start_scale = 1
-export (int) var startingHealth = 600
+export (float) var startingHealth = 600
+export (int) var numParticlesOnDecay = 2
 export (float) var shakeAmount = 4
 export (float) var shakeVecDecayFactor = 0.5
+
 
 onready var RNG = RandomNumberGenerator.new()
 var spawnTime = 0
@@ -21,9 +24,12 @@ var decayLevel = 1
 var decayLevelMax = 4
 var absoluteScale = 1
 var decayOffset = 80
-var numParticlesOnDecay = 2
-var health = startingHealth
+var emittingParticles = false
+
+var health : float = startingHealth
 var shakeVec : Vector2 = Vector2(0, 0)
+
+signal particle_fully_decayed
 
 onready var burstSprite = load("res://Subscenes/Burst.tscn")
 
@@ -33,9 +39,7 @@ enum states {ACTIVE, INACTIVE}
 
 var state = states.INACTIVE
 var color = colors.RED
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 
 const spriteScales = [0.5, 0.35, 0.75, 0.5]
 const globalScales = [1.0, 0.75, 0.5, 0.25]
@@ -71,7 +75,9 @@ var sounds = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-#	health *= globalScales[decayLevel - 1]
+	$CPUParticles2D.emitting = false
+	startingHealth *= globalScales[decayLevel - 1]
+	health = startingHealth
 	RNG.randomize()
 	animatedSprite = get_node("Sprites/AnimatedSprite")
 	sprite = get_node("Sprites/Sprite")
@@ -81,19 +87,20 @@ func _ready():
 
 
 func _process(_delta):
-	if state == states.ACTIVE && decayLevel < 4: 
-		health -= 1 
-	var healthFracCompl = 1 - max(0, health/startingHealth)
-	var healthFracCompl2 = healthFracCompl*healthFracCompl
-	var shakeScale = globalScales[decayLevel - 1]
-	var shakeMag = healthFracCompl2*shakeAmount*shakeScale
-	var x_shake = RNG.randfn(0, shakeMag)
-	var y_shake = RNG.randfn(0, shakeMag)
-	var shakeVecIncrement = Vector2(x_shake, y_shake)
-	var oldShakeVec = shakeVec
-	var shakeVec = (oldShakeVec * shakeVecDecayFactor) + shakeVecIncrement
-	animatedSprite.offset = shakeVec
-	sprite.offset = shakeVec
+	if state == states.ACTIVE:
+		if decayLevel < 4: 
+			health -= 1 
+		var healthFracCompl = 1 - max(0, health/startingHealth)
+		var healthFracCompl2 = healthFracCompl*healthFracCompl
+		var shakeScale = globalScales[decayLevel - 1]
+		var shakeMag = healthFracCompl2*shakeAmount*shakeScale
+		var x_shake = RNG.randfn(0, shakeMag)
+		var y_shake = RNG.randfn(0, shakeMag)
+		var shakeVecIncrement = Vector2(x_shake, y_shake)
+		var oldShakeVec = shakeVec
+		shakeVec = (oldShakeVec * shakeVecDecayFactor) + shakeVecIncrement
+		animatedSprite.offset = shakeVec
+		sprite.offset = shakeVec
 
 
 
@@ -109,9 +116,16 @@ func _physics_process(_delta):
 		linear_damp = slowedDamp
 		angular_damp = slowedDamp
 		slowed = false
+		
 	else: 
 		linear_damp = 0
-		angular_damp = slowedDamp
+		angular_damp = 0
+	
+	if emittingParticles:
+		$CPUParticles2D.emitting = true
+		emittingParticles = false
+	else:
+		$CPUParticles2D.emitting = false
 	
 	if state == states.ACTIVE and health <= 0:  #and rand_range(0, 100 / _delta) <= 1:
 		decay()
@@ -138,6 +152,7 @@ func _on_Particle_body_exited(body):
 	var gain = audioScales[decayLevel-1]
 		
 	playCollisionAudio(speedFrac, gain)
+	
 
 func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 	var playbackPosition = $CollisionAudio.get_playback_position()
@@ -178,6 +193,8 @@ func decay():
 				color,
 				states.ACTIVE
 			)
+	else:
+		emit_signal("particle_fully_decayed")
 	spawn_burst_vfx(self.global_position)
 	queue_free()
 
@@ -189,8 +206,10 @@ func spawn_burst_vfx(pos):
 	pass
 
 func _slow(beamStrength, beamColor):
+	print("BEAM HIT")
 	if state == states.ACTIVE:
 		if beamColor == color:
+			emittingParticles = true
 			health -= beamStrength / globalScales[decayLevel - 1]
 		slowed = true
 
