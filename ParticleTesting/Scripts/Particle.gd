@@ -153,7 +153,6 @@ func _physics_process(_delta):
 		decay()
 	var timeSinceLoad = OS.get_ticks_msec() - sceneLoadTime
 	var accelAdded = accelIncreaseBy * floor(timeSinceLoad / msTillAccelIncrease) + gradualAccel
-	print(accelAdded)
 	linear_velocity += linear_velocity.normalized() * (accelAdded) * accelMultiplier
 	linear_velocity = linear_velocity.clamped(max_speed)
 
