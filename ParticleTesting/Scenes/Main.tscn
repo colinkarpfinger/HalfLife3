@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Scripts/Hearts.gd" type="Script" id=1]
 [ext_resource path="res://Subscenes/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Images/restart_up_blue.png" type="Texture" id=8]
 [ext_resource path="res://Images/restart_down_blue.png" type="Texture" id=9]
 [ext_resource path="res://Subscenes/ChargerManager.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Subscenes/ScoreCounter.tscn" type="PackedScene" id=11]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -128,6 +129,13 @@ custom_styles/focus = SubResource( 7 )
 custom_styles/normal = SubResource( 8 )
 text = ""
 
+[node name="ScoreCounter" parent="." instance=ExtResource( 11 )]
+margin_left = 373.028
+margin_top = 3.2152
+margin_right = 570.028
+margin_bottom = 29.2152
+
 [connection signal="player_died" from="Player" to="Button" method="_on_Player_player_died"]
 [connection signal="player_hit" from="Player" to="Hearts" method="_on_Player_player_hit"]
+[connection signal="particle_fully_decayed" from="ParticleSpawner" to="." method="_on_ParticleSpawner_particle_fully_decayed"]
 [connection signal="button_up" from="Button" to="." method="_on_Button_button_up"]

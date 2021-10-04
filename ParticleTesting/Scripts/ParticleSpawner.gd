@@ -15,6 +15,8 @@ export var add_music_particle_threshold_1 = 5
 export var add_music_particle_threshold_2 = 10
 export var add_music_particle_threshold_3 = 20
 
+signal particle_fully_decayed
+
 const Particle = preload("res://Scripts/Particle.gd")
 
 const sprites_large = {
@@ -60,6 +62,7 @@ func spawn_particle(position:Vector2, velocity:Vector2, mass:float, decay_level:
 	particle.mass = mass
 	particle.state = state
 #	particle.spawnTime = OS.get_ticks_msec()
+	particle.connect("particle_fully_decayed", self, "_on_particle_fully_decayed")
 	return particle
 	
 const center = Vector2(512, 300)
@@ -79,6 +82,8 @@ func _on_Timer_timeout():
 	spawn_in_center_at_angle(randomRotationDegrees)
 	spawn_count += 1
 	
+func _on_particle_fully_decayed():
+	emit_signal("particle_fully_decayed")
 
 func _process(delta):
 	# This is a waste of CPU but whatever

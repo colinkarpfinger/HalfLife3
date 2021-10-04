@@ -25,6 +25,8 @@ var numParticlesOnDecay = 2
 var health = startingHealth
 var shakeVec : Vector2 = Vector2(0, 0)
 
+signal particle_fully_decayed
+
 onready var burstSprite = load("res://Subscenes/Burst.tscn")
 
 enum colors {RED, YELLOW, GREEN}
@@ -178,6 +180,8 @@ func decay():
 				color,
 				states.ACTIVE
 			)
+	else:
+		emit_signal("particle_fully_decayed")
 	spawn_burst_vfx(self.global_position)
 	queue_free()
 
