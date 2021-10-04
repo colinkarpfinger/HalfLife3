@@ -232,9 +232,9 @@ func decay():
 		emit_signal("particle_fully_decayed")
 		playPopAudio()
 		$CollisionAudio.connect("finished",self,"destroyRootParticle")
-		$Collider.visible = false
+		$Collider.disabled = true
 		if $Collider2:
-			$Collider2.visible = false
+			$Collider2.disabled = true
 		$Sprites.visible = false
 		state = states.INACTIVE
 		spawn_burst_vfx(self.global_position)
