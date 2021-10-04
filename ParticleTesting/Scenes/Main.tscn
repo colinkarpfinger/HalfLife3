@@ -130,10 +130,14 @@ custom_styles/normal = SubResource( 8 )
 text = ""
 
 [node name="ScoreCounter" parent="." instance=ExtResource( 11 )]
-margin_left = 373.028
-margin_top = 3.2152
-margin_right = 570.028
-margin_bottom = 29.2152
+modulate = Color( 0.0164, 0.65928, 0.82, 1 )
+margin_left = 5.65233
+margin_top = 551.083
+margin_right = 246.652
+margin_bottom = 596.083
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+text = "Score: 100 
+High:   200"
 
 [connection signal="player_died" from="Player" to="Button" method="_on_Player_player_died"]
 [connection signal="player_hit" from="Player" to="Hearts" method="_on_Player_player_hit"]
