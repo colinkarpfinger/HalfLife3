@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/ScoreCounter.gd" type="Script" id=1]
+
+[node name="Score Counter" type="RichTextLabel"]
+margin_right = 197.0
+margin_bottom = 26.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+text = "Score: 0 High Score: 0"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
