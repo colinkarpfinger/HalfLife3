@@ -158,7 +158,7 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 12 )
-frame = 3
+frame = 1
 speed_scale = 2.0
 playing = true
 
@@ -166,7 +166,7 @@ playing = true
 shape = SubResource( 13 )
 
 [node name="Beam" type="Area2D" parent="."]
-modulate = Color( 0.701961, 0.701961, 0.701961, 0.784314 )
+modulate = Color( 1, 1, 1, 0.784314 )
 scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 5 )
 
@@ -174,7 +174,7 @@ script = ExtResource( 5 )
 polygon = PoolVector2Array( -1.69397, 113.807, -91.4909, -50.0727, 89.7867, -50.6339 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Beam"]
-modulate = Color( 1, 1, 1, 0.784314 )
+modulate = Color( 1, 1, 1, 0.4 )
 position = Vector2( 0, -10.542 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 26 )
