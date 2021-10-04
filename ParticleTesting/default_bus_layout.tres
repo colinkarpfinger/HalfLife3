@@ -2,6 +2,7 @@
 
 [sub_resource type="AudioEffectLimiter" id=1]
 resource_name = "Limiter"
+threshold_db = -5.8
 
 [resource]
 bus/1/name = "Collisions"

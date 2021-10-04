@@ -11,7 +11,8 @@ export (float) var max_speed = 1000
 export (float) var max_speed_for_audio = 200
 export (float) var start_scale = 1
 export (int) var startingHealth = 600
-export (float) var shakeAmount = 6
+export (float) var shakeAmount = 3
+export (float) var shakeVecDecayFactor = 0.85
 
 onready var RNG = RandomNumberGenerator.new()
 var spawnTime = 0
@@ -22,6 +23,7 @@ var absoluteScale = 1
 var decayOffset = 80
 var numParticlesOnDecay = 2
 var health = startingHealth
+var shakeVec : Vector2 = Vector2(0, 0)
 
 enum colors {RED, YELLOW, GREEN}
 
@@ -66,9 +68,12 @@ func _process(_delta):
 	var shakeScale = globalScales[decayLevel - 1]
 	var x_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
 	var y_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
-	var shakeVector = Vector2(x_shake, y_shake)
-	animatedSprite.offset = shakeVector
-	sprite.offset = shakeVector
+	var shakeVecIncrement = Vector2(x_shake, y_shake)
+	var oldShakeVector = animatedSprite.offset
+	var newShakeVector = \
+			oldShakeVector * shakeVecDecayFactor + shakeVecIncrement
+	animatedSprite.offset = newShakeVector
+	sprite.offset = newShakeVector
 
 
 
