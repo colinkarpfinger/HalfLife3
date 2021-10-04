@@ -42,10 +42,27 @@ const audioScales = [1.0, 0.5625, 0.25, 0.0625]
 # -----------------------------------------------------------------------------
 # Audio
 var sounds = [
-	preload("res://Audio/Effects/wobble_var_0.wav"),
-	preload("res://Audio/Effects/wobble_var_1.wav"),
-	preload("res://Audio/Effects/wobble_var_2.wav"),
-	preload("res://Audio/Effects/wobble_var_3.wav")
+	[
+		preload("res://Audio/Effects/wobble_0_var_0.wav"),
+		preload("res://Audio/Effects/wobble_0_var_1.wav"),
+		preload("res://Audio/Effects/wobble_0_var_2.wav"),
+		preload("res://Audio/Effects/wobble_0_var_3.wav")
+	], [
+		preload("res://Audio/Effects/wobble_1_var_0.wav"),
+		preload("res://Audio/Effects/wobble_1_var_1.wav"),
+		preload("res://Audio/Effects/wobble_1_var_2.wav"),
+		preload("res://Audio/Effects/wobble_1_var_3.wav")
+	], [
+		preload("res://Audio/Effects/wobble_2_var_0.wav"),
+		preload("res://Audio/Effects/wobble_2_var_1.wav"),
+		preload("res://Audio/Effects/wobble_2_var_2.wav"),
+		preload("res://Audio/Effects/wobble_2_var_3.wav")
+	], [
+		preload("res://Audio/Effects/wobble_3_var_0.wav"),
+		preload("res://Audio/Effects/wobble_3_var_1.wav"),
+		preload("res://Audio/Effects/wobble_3_var_2.wav"),
+		preload("res://Audio/Effects/wobble_3_var_3.wav")
+	]
 ]
 
 # -----------------------------------------------------------------------------
@@ -130,7 +147,7 @@ func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 			$CollisionAudio.volume_db = log(gain * speedFracSq) - 6
 			
 			var soundIndex = RNG.randi_range(0, sounds.size()-1) 
-			$CollisionAudio.stream = sounds[soundIndex]
+			$CollisionAudio.stream = sounds[decayLevel-1][soundIndex]
 			
 			$CollisionAudio.play()
 
