@@ -115,7 +115,6 @@ playing = true
 position = Vector2( -2.32518, 0.25949 )
 frames = SubResource( 16 )
 animation = "closed"
-frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]

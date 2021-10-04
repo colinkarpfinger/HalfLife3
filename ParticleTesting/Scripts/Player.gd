@@ -5,6 +5,7 @@ signal player_died
 
 export var beamPath := NodePath();
 onready var beam : Beam = get_node(beamPath);
+const deathParticles = preload("res://Subscenes/DeathParticles.tscn")
 
 export (float) var accel_speed = 20
 export (float) var max_speed = 1000
@@ -96,6 +97,11 @@ func _on_Area2D_body_entered(body):
 
 #health reached 0
 func die():
+#	$CPUParticles2D.emitting = true
+	var dp = deathParticles.instance() 
+	dp.emitting = true
+	dp.position = transform.origin
+	get_parent().add_child(dp)
 	get_tree().queue_delete(self)
 	emit_signal("player_died")
 

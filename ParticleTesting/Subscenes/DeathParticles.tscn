@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="DeathParticles" type="CPUParticles2D"]
+emitting = false
+amount = 50
+lifetime = 0.25
+one_shot = true
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 386.13
+initial_velocity_random = 0.39
+scale_amount = 5.0
+color = Color( 1, 0.486275, 0.486275, 1 )
