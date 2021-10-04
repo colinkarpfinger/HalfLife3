@@ -88,7 +88,7 @@ var popSounds = [
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$CPUParticles2D.emitting = false
-	startingHealth *= globalScales[decayLevel - 1]
+	startingHealth *= globalScales[decayLevel - 1] * rand_range(.9, 1.1)
 	health = startingHealth
 	RNG.randomize()
 	animatedSprite = get_node("Sprites/AnimatedSprite")
