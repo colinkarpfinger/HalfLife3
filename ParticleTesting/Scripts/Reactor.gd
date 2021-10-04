@@ -5,7 +5,7 @@ const Particle = preload("res://Scripts/Particle.gd")
 const open_length = 2
 const closed_length = 14
 
-var walls_open = true
+var walls_open = false
 
 var state_duration  = 0
 
