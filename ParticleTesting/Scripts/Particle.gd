@@ -161,9 +161,10 @@ func decay():
 	var base_offset = linear_velocity.normalized() * decayOffset
 	
 	var angle_delta = 2 * PI / numParticlesOnDecay
+	var angle_rnd_offset = RNG.randfn(0, 2*PI)
 	if decayLevel < decayLevelMax:
 		for i in range(0, numParticlesOnDecay):
-			var new_angle = angle_delta * i + linear_velocity.angle()
+			var new_angle = angle_delta * i + linear_velocity.angle() + angle_rnd_offset
 			var offset = base_offset.normalized().rotated(new_angle) * scale
 			var new_velocity = linear_velocity.length() * Vector2.RIGHT.rotated(new_angle)
 			#print(new_angle, '      ', new_velocity.angle())
