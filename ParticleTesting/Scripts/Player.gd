@@ -48,10 +48,12 @@ func _physics_process(_delta):
 	#get input
 	var input = get_input(_delta)
 	#update beam position
-	var mouse_pos = get_viewport().get_mouse_position()
-	var mouse_vec = (mouse_pos - transform.origin).normalized()
-	beam.rotation = lerp_angle(beam.rotation, mouse_vec.angle() + PI/2, aim_lerp)
-	beam.transform.origin = Vector2(cos(beam.rotation - PI/2), sin(beam.rotation - PI/2)) * 180
+	var mouse_vec = get_local_mouse_position()
+#	beam.rotation = lerp_angle(beam.rotation, mouse_vec.angle() + PI/2, aim_lerp)
+#	beam.transform.origin = Vector2(cos(beam.rotation - PI/2), sin(beam.rotation - PI/2)) * 180
+	var beamAnchor = $BeamAnchor
+	beamAnchor.rotation = lerp_angle(beamAnchor.rotation, mouse_vec.angle() + PI/2, aim_lerp)
+#	beamAnchor.transform.origin = Vector2(cos(beamAnchor.rotation - PI/2), sin(beamAnchor.rotation - PI/2)) * 180
 	#add input to velocity
 	if state == player_states.NORMAL || state == player_states.INVINCIBLE:	
 		velocity += input.normalized() * accel_speed
@@ -70,7 +72,7 @@ func get_input(delta) -> Vector2:
 	if Input.is_action_pressed("move_right") : input.x += 1
 	if Input.is_action_pressed("move_up") : input.y -= 1
 	if Input.is_action_pressed("move_down") : input.y += 1
-	if Input.is_action_pressed("fire") : 
+	if  not Input.is_action_pressed("fire") : 
 		beam.doFreeze(delta)
 		beam.visible = true;
 	else:
@@ -98,7 +100,7 @@ func die():
 	emit_signal("player_died")
 
 func change_beam_color(new_color):
-	$Beam.change_color(new_color)
+	beam.change_color(new_color)
 	
 #math helper functions
 static func lerp_angle(from, to, weight):

@@ -3,11 +3,11 @@ extends Node2D
 const Particle = preload("res://Scripts/Particle.gd")
 
 const open_length = 2
-const closed_length = 8
+const closed_length = 10
 
 var walls_open = false
 
-var state_duration  = 5
+var state_duration  = 9
 
 
 # Called when the node enters the scene tree for the first time.
