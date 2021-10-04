@@ -108,14 +108,13 @@ script = ExtResource( 3 )
 visible = false
 position = Vector2( -2.37051, 5.01057 )
 frames = SubResource( 11 )
-frame = 6
+frame = 2
 playing = true
 
 [node name="WallSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -2.32518, 0.25949 )
 frames = SubResource( 16 )
 animation = "closed"
-frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]

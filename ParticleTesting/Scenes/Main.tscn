@@ -68,7 +68,6 @@ position = Vector2( 246.908, 324.02 )
 scale = Vector2( 0.9718, 1 )
 numToSpawn = 1
 spawnVelocityMagnitude = 200
-spawn_time = 10
 
 [node name="Walls" type="Node2D" parent="."]
 __meta__ = {

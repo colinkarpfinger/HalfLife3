@@ -2,12 +2,12 @@ extends Node2D
 
 var timeMachine;
 
-export var numToSpawn = 200
+export var numToSpawn = 2
 export var spawnVelocityMagnitude = 10
 export var maxRotationSpeed = 2
 export var particleScale = 1
 export var spawn_distance = 15
-export var spawn_time = 6
+#export var spawn_time = 2
 
 export var starting_db = -80
 export var final_db = 0
@@ -49,7 +49,7 @@ func _ready():
 	setup_audio()
 	randomize()
 	
-	$Timer.wait_time = spawn_time
+#	$Timer.wait_time = spawn_time
 
 	var angle_delta = 360 / max(numToSpawn - 1, 1)
 	for n in range(0, numToSpawn):

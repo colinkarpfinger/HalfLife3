@@ -7,7 +7,7 @@ signal collided
 var animatedSprite = null
 var sprite = null
 
-export (float) var collisionSpeedUp = 50
+#export (float) var collisionSpeedUp = 50
 export (float) var slowedDamp = 2
 export (float) var max_speed = 1000
 export (float) var max_speed_for_audio = 200
@@ -15,6 +15,10 @@ export (float) var startingHealth = 600
 export (int) var numParticlesOnDecay = 2
 export (float) var shakeAmount = 4
 export (float) var shakeVecDecayFactor = 0.5
+export (float) var accelMultiplier = 1
+export (float) var wrongColorDamageReduce = .3
+export (float) var childSpawnAccel = 1
+
 
 
 onready var RNG = RandomNumberGenerator.new()
@@ -25,6 +29,7 @@ var decayLevelMax = 4
 var absoluteScale = 1
 var decayOffset = 80
 var emittingParticles = false
+var gradualAccel = .01
 
 var health : float = startingHealth
 var shakeVec : Vector2 = Vector2(0, 0)
@@ -129,6 +134,7 @@ func _physics_process(_delta):
 	
 	if state == states.ACTIVE and health <= 0:  #and rand_range(0, 100 / _delta) <= 1:
 		decay()
+	linear_velocity += linear_velocity.normalized() * gradualAccel * accelMultiplier
 	linear_velocity = linear_velocity.clamped(max_speed)
 
 
@@ -137,7 +143,7 @@ func _on_Particle_body_exited(body):
 	if body is RigidBody2D : 
 		var bodyRB : RigidBody2D = body
 		var velocityDirection = bodyRB.linear_velocity.normalized()
-		bodyRB.apply_impulse(Vector2(0,0), velocityDirection * collisionSpeedUp)
+#		bodyRB.apply_impulse(Vector2(0,0), velocityDirection * collisionSpeedUp)
 		
 	var selfRB : RigidBody2D = self
 	
@@ -181,7 +187,7 @@ func decay():
 		for i in range(0, numParticlesOnDecay):
 			var new_angle = angle_delta * i + linear_velocity.angle() + angle_rnd_offset
 			var offset = base_offset.normalized().rotated(new_angle) * scale
-			var new_velocity = linear_velocity.length() * Vector2.RIGHT.rotated(new_angle)
+			var new_velocity = linear_velocity.length() * Vector2.RIGHT.rotated(new_angle) * childSpawnAccel
 			#print(new_angle, '      ', new_velocity.angle())
 			#print("Particle: spawning with scale: " + str(absoluteScale))
 			var particle = get_parent().call_deferred(
@@ -206,10 +212,12 @@ func spawn_burst_vfx(pos):
 	pass
 
 func _slow(beamStrength, beamColor):
-	print("BEAM HIT")
 	if state == states.ACTIVE:
 		if beamColor == color:
 			emittingParticles = true
 			health -= beamStrength / globalScales[decayLevel - 1]
+		else:
+			health -= beamStrength / globalScales[decayLevel - 1] * wrongColorDamageReduce
+			
 		slowed = true
 
