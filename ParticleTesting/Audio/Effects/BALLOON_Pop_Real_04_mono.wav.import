@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BALLOON_Pop_Real_04_mono.wav-c1f8447acdc15af0eb9be197c189318b.sample"
+
+[deps]
+
+source_file="res://Audio/Effects/BALLOON_Pop_Real_04_mono.wav"
+dest_files=[ "res://.import/BALLOON_Pop_Real_04_mono.wav-c1f8447acdc15af0eb9be197c189318b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
