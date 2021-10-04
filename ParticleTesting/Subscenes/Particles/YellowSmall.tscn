@@ -69,6 +69,6 @@ spread = 180.0
 gravity = Vector2( 0, 0 )
 initial_velocity = 49.5
 scale_amount = 4.0
-color = Color( 0.87451, 0.776471, 0.443137, 1 )
+color = Color( 0.964706, 0.745098, 0.352941, 1 )
 
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]
