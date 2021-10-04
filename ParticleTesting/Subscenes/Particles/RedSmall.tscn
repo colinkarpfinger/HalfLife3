@@ -30,9 +30,12 @@ contact_monitor = true
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
+collisionSpeedUp = 25.0
 slowedDamp = 3.0
+startingHealth = 1000.0
 
 [node name="Sprites" type="Node2D" parent="."]
+z_index = 1
 
 [node name="Sprite" type="Sprite" parent="Sprites"]
 position = Vector2( -2, 2 )
@@ -52,4 +55,17 @@ polygon = PoolVector2Array( 11.3945, -13.6002, 28.4018, 9.40133, -5.11842, 9.502
 stream = SubResource( 3 )
 volume_db = -6.0
 bus = "Collisions"
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 2.6727, 3.5636 )
+amount = 10
+lifetime = 0.4
+local_coords = false
+direction = Vector2( 0, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 49.5
+scale_amount = 4.0
+color = Color( 0.788235, 0.160784, 0.160784, 1 )
+
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]
