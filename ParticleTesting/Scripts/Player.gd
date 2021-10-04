@@ -96,7 +96,10 @@ func _on_Area2D_body_entered(body):
 func die():
 	get_tree().queue_delete(self)
 	emit_signal("player_died")
-		
+
+func change_beam_color(new_color):
+	$Beam.change_color(new_color)
+	
 #math helper functions
 static func lerp_angle(from, to, weight):
 	return from + _short_angle_dist(from, to) * weight
@@ -105,4 +108,3 @@ static func _short_angle_dist(from, to):
 	var max_angle = PI * 2
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
-

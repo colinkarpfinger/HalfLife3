@@ -187,9 +187,9 @@ func spawn_burst_vfx(pos):
 	get_tree().get_root().add_child(burst)
 	pass
 
-func _slow(beamStrength):
+func _slow(beamStrength, beamColor):
 	if state == states.ACTIVE:
-		health -= beamStrength / globalScales[decayLevel - 1]
-#		print(health)
+		if beamColor == color:
+			health -= beamStrength / globalScales[decayLevel - 1]
 		slowed = true
 
