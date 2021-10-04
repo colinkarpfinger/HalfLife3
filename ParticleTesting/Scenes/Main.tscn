@@ -64,6 +64,7 @@ position = Vector2( 477.649, 298.334 )
 scale = Vector2( 0.9718, 1 )
 numToSpawn = 1
 spawnVelocityMagnitude = 200
+spawn_time = 10
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 246.908, 324.02 )

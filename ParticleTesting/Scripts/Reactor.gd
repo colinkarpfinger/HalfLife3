@@ -3,9 +3,9 @@ extends Node2D
 const Particle = preload("res://Scripts/Particle.gd")
 
 const open_length = 2
-const closed_length = 8
+const closed_length = 14
 
-var walls_open = false
+var walls_open = true
 
 var state_duration  = 0
 

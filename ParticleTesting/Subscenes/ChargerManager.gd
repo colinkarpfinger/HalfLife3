@@ -2,8 +2,9 @@ extends Node2D
 
 #
 const A = Vector2(100, 100)
-const B = Vector2(100, 400)
-
+const B = Vector2(100, 500)
+const C = Vector2(900, 100)
+const D = Vector2(100, 100)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -46,7 +46,7 @@ func _process(_delta):
 
 func _physics_process(_delta):
 	#get input
-	var input = get_input()
+	var input = get_input(_delta)
 	#update beam position
 	var mouse_pos = get_viewport().get_mouse_position()
 	var mouse_vec = (mouse_pos - transform.origin).normalized()
@@ -64,14 +64,14 @@ func _physics_process(_delta):
 	velocity = move_and_slide(velocity)
 
 
-func get_input() -> Vector2:
+func get_input(delta) -> Vector2:
 	var input = Vector2.ZERO
 	if Input.is_action_pressed("move_left") : input.x -= 1
 	if Input.is_action_pressed("move_right") : input.x += 1
 	if Input.is_action_pressed("move_up") : input.y -= 1
 	if Input.is_action_pressed("move_down") : input.y += 1
 	if Input.is_action_pressed("fire") : 
-		beam.doFreeze()
+		beam.doFreeze(delta)
 		beam.visible = true;
 	else:
 		beam.visible = false;
