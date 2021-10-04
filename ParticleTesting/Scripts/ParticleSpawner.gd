@@ -6,6 +6,9 @@ export var particleScale = 1
 export var spawn_distance = 15
 export var spawn_time = 6
 
+export var starting_db = -80
+export var final_db = 0
+export var fade_seconds = 8
 export var add_music_particle_threshold_1 = 5
 export var add_music_particle_threshold_2 = 10
 export var add_music_particle_threshold_3 = 20
@@ -73,18 +76,22 @@ func _on_Timer_timeout():
 	var randomRotationDegrees = rand_range(0,360)
 	spawn_in_center_at_angle(randomRotationDegrees)
 	spawn_count += 1
-	maybe_add_music()
 	
 
-func maybe_add_music():
+func _process(delta):
+	# This is a waste of CPU but whatever
+	var db_step = (final_db - starting_db)*delta/fade_seconds
 	if spawn_count >= add_music_particle_threshold_1:
-		basic_drums.volume_db = 0
+		var db = basic_drums.volume_db
+		basic_drums.volume_db = min(final_db, db+db_step)
 		
 	if spawn_count >= add_music_particle_threshold_2:
-		snare_and_kick.volume_db = 0
+		var db = snare_and_kick.volume_db
+		snare_and_kick.volume_db = min(final_db, db+db_step)
 		
 	if spawn_count >= add_music_particle_threshold_3:
-		percussive_ornaments.volume_db = 0
+		var db = percussive_ornaments.volume_db
+		percussive_ornaments.volume_db = min(final_db, db+db_step)
 
 func setup_audio():
 	basic_drums = get_node("basic_drums")
