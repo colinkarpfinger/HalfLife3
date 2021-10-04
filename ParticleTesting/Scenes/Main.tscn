@@ -136,7 +136,6 @@ custom_fonts/font = ExtResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.384314, 0.384314, 0.384314, 1 )
 text = "Restart"
-
 [connection signal="player_died" from="Player" to="CanvasLayer/Button" method="_on_Player_player_died"]
 [connection signal="player_hit" from="Player" to="Hearts" method="_on_Player_player_hit"]
 [connection signal="particle_fully_decayed" from="ParticleSpawner" to="." method="_on_ParticleSpawner_particle_fully_decayed"]
