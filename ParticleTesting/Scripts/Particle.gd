@@ -193,8 +193,6 @@ func playPopAudio():
 	var soundIndex = RNG.randi_range(0, popSounds.size()-1) 
 	$CollisionAudio.stream = popSounds[soundIndex]
 	$CollisionAudio.play()
-	print("playing pop audio")
-
 
 
 func decay():
