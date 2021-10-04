@@ -1,12 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/ScoreCounter.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/Montreal.tres" type="DynamicFont" id=2]
 
 [node name="Score Counter" type="RichTextLabel"]
-margin_right = 197.0
-margin_bottom = 26.0
-custom_colors/default_color = Color( 0, 0, 0, 1 )
-text = "Score: 0 High Score: 0"
+margin_right = 216.0
+margin_bottom = 54.0
+custom_fonts/normal_font = ExtResource( 2 )
+custom_colors/default_color = Color( 0.0196078, 0.796078, 0.988235, 1 )
+custom_colors/font_color_selected = Color( 0.0196078, 0.796078, 0.988235, 1 )
+text = "Score: 0
+High Score: 0"
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false

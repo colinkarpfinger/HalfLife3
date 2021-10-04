@@ -33,7 +33,7 @@ func resetScore():
 	updateText()
 	
 func updateText():
-	text = "Score :" + str(score) + " High Score: " + str(highScore)
+	text = "Score: " + str(score) + "\nHigh:  " + str(highScore)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
