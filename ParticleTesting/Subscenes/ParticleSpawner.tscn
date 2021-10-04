@@ -8,11 +8,10 @@
 
 [node name="ParticleSpawner" type="Node2D"]
 script = ExtResource( 1 )
-numToSpawn = 300
 spawnVelocityMagnitude = 100
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 autostart = true
 
 [node name="basic_drums" type="AudioStreamPlayer" parent="."]

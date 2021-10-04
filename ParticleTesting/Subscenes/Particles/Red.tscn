@@ -48,10 +48,11 @@ contact_monitor = true
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
-collisionSpeedUp = 25.0
 slowedDamp = 3.0
 max_speed = 750.0
-startingHealth = 1000.0
+startingHealth = 500.0
+accelMultiplier = 5.0
+childSpawnAccel = 2.0
 
 [node name="Sprites" type="Node2D" parent="."]
 z_index = 1
