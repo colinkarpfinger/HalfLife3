@@ -5,7 +5,6 @@
 [ext_resource path="res://Scripts/SpinForever.gd" type="Script" id=3]
 [ext_resource path="res://Images/X_small.png" type="Texture" id=4]
 [ext_resource path="res://Images/X_small_shadow.png" type="Texture" id=5]
-[ext_resource path="res://Audio/Effects/wobble_test.wav" type="AudioStream" id=6]
 
 [sub_resource type="PhysicsMaterial" id=1]
 friction = 0.0
@@ -21,6 +20,8 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
+
+[sub_resource type="AudioStreamSample" id=4]
 
 [node name="YellowSmall" type="RigidBody2D" groups=[
 "Particle",
@@ -49,7 +50,7 @@ frames = SubResource( 3 )
 script = ExtResource( 3 )
 
 [node name="CollisionAudio" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
+stream = SubResource( 4 )
 volume_db = -6.0
 bus = "Collisions"
 [connection signal="body_exited" from="." to="." method="_on_Particle_body_exited"]

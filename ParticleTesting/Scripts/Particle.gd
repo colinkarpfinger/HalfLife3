@@ -36,6 +36,17 @@ var color = colors.RED
 const spriteScales = [0.5, 0.35, 0.75, 0.5]
 const globalScales = [1.0, 0.75, 0.5, 0.25]
 
+# -----------------------------------------------------------------------------
+# Audio
+var sounds = [
+	preload("res://Audio/Effects/wobble_var_0.wav"),
+	preload("res://Audio/Effects/wobble_var_1.wav"),
+	preload("res://Audio/Effects/wobble_var_2.wav"),
+	preload("res://Audio/Effects/wobble_var_3.wav")
+]
+
+# -----------------------------------------------------------------------------
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 #	health *= globalScales[decayLevel - 1]
@@ -108,6 +119,10 @@ func playCollisionAudio(rawSpeedFrac: float):
 			# collision energy proportional to square of relative velocity
 			var speedFracSq = speedFrac*speedFrac
 			$CollisionAudio.volume_db = log(speedFracSq) - 6
+			
+			var soundIndex = RNG.randi_range(0, sounds.size()-1) 
+			$CollisionAudio.stream = sounds[soundIndex]
+			
 			$CollisionAudio.play()
 
 

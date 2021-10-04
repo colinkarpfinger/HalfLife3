@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/wobble_test.wav-f558b4b19be4270d1bacd3a936072519.sample"
+path="res://.import/wobble_var_3.wav-69c68620e1661aae19433c125cadfbb2.sample"
 
 [deps]
 
-source_file="res://Audio/Effects/wobble_test.wav"
-dest_files=[ "res://.import/wobble_test.wav-f558b4b19be4270d1bacd3a936072519.sample" ]
+source_file="res://Audio/Effects/wobble_var_3.wav"
+dest_files=[ "res://.import/wobble_var_3.wav-69c68620e1661aae19433c125cadfbb2.sample" ]
 
 [params]
 
