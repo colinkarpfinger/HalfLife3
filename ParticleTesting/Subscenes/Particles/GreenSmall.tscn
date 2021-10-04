@@ -35,7 +35,7 @@ angular_damp = 0.0
 script = ExtResource( 2 )
 slowedDamp = 3.0
 max_speed = 100.0
-startingHealth = 300.0
+startingHealth = 500.0
 numParticlesOnDecay = 3
 
 [node name="Collider" type="CollisionShape2D" parent="."]
