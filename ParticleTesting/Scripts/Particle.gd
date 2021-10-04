@@ -35,6 +35,7 @@ var color = colors.RED
 
 const spriteScales = [0.5, 0.35, 0.75, 0.5]
 const globalScales = [1.0, 0.75, 0.5, 0.25]
+const audioScales = [1.0, 0.5625, 0.25, 0.0625]
 
 # -----------------------------------------------------------------------------
 # Audio
@@ -109,16 +110,19 @@ func _on_Particle_body_exited(body):
 	else:
 		speedFrac = selfRB.linear_velocity.length() / max_speed_for_audio
 		
-	playCollisionAudio(speedFrac)
+	var gain = audioScales[decayLevel-1]
+		
+	playCollisionAudio(speedFrac, gain)
 
-func playCollisionAudio(rawSpeedFrac: float):
+func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 	var playbackPosition = $CollisionAudio.get_playback_position()
 	if playbackPosition == 0 or playbackPosition > 0.1:
 		var speedFrac = min(1, max(0, rawSpeedFrac)) # bounding for safety
 		if speedFrac > 0.01: # avoid playing any sound for really light collisions
 			# collision energy proportional to square of relative velocity
 			var speedFracSq = speedFrac*speedFrac
-			$CollisionAudio.volume_db = log(speedFracSq) - 6
+			var gain = min(1, max(0, rawGain))
+			$CollisionAudio.volume_db = log(gain * speedFracSq) - 6
 			
 			var soundIndex = RNG.randi_range(0, sounds.size()-1) 
 			$CollisionAudio.stream = sounds[soundIndex]
