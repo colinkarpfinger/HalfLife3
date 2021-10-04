@@ -11,10 +11,13 @@ const charger_colors = {
 # var a = 2
 # var b = "text"
 
-var col
+var spawn_position = 0
 var entered = false
 var entered_duration = 0
-var death_length = 2
+var death_length = 1
+
+var flicker_length = 0.2
+var flicker_duration = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,11 +26,16 @@ func _ready():
 func _process(delta): 
 	if entered:
 		entered_duration += delta
-#		if entered_duration > death_length:
-#			get_parent().remove_child(self)
-#			queue_free()
-
-
+		flicker_duration += delta
+		if flicker_duration > flicker_length:
+			flicker_duration = 0
+			self.visible = not self.visible
+		if entered_duration > death_length:
+			get_parent().change_position(self)
+			entered = false
+			self.visible = true
+			entered_duration = 0
+			flicker_duration = 0
 
 
 func _on_Charger_body_entered(body):

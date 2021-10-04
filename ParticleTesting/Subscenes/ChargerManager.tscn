@@ -1,18 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Subscenes/Charger.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Subscenes/ChargerManager.gd" type="Script" id=2]
 
 [node name="ChargerManager" type="Node2D"]
 script = ExtResource( 2 )
-
-[node name="Yellow" parent="." instance=ExtResource( 1 )]
-position = Vector2( 112.488, 103.914 )
-color = 1
-
-[node name="Red" parent="." instance=ExtResource( 1 )]
-position = Vector2( 444.043, 501.893 )
-
-[node name="Green" parent="." instance=ExtResource( 1 )]
-position = Vector2( 774.647, 105.008 )
-color = 2
