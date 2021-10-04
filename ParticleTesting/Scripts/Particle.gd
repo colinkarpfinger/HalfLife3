@@ -18,6 +18,8 @@ export (float) var shakeVecDecayFactor = 0.5
 export (float) var accelMultiplier = 1
 export (float) var wrongColorDamageReduce = .3
 export (float) var childSpawnAccel = 1
+export (float) var msTillAccelIncrease = 20000
+export (float) var accelIncreaseBy = .005
 
 
 
@@ -30,6 +32,7 @@ var absoluteScale = 1
 var decayOffset = 80
 var emittingParticles = false
 var gradualAccel = .05
+var sceneLoadTime = 0
 
 var health : float = startingHealth
 var shakeVec : Vector2 = Vector2(0, 0)
@@ -87,6 +90,7 @@ var popSounds = [
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	sceneLoadTime = get_node("../../../Main").sceneLoadTime
 	$CPUParticles2D.emitting = false
 	startingHealth *= globalScales[decayLevel - 1] * rand_range(.9, 1.1)
 	health = startingHealth
@@ -100,7 +104,7 @@ func _ready():
 
 func _process(_delta):
 	if state == states.ACTIVE:
-		visible = true
+		modulate.a = 1
 		if decayLevel < 4: 
 			health -= 1 
 		var healthFracCompl = 1 - max(0, health/startingHealth)
@@ -115,7 +119,10 @@ func _process(_delta):
 		animatedSprite.offset = shakeVec
 		sprite.offset = shakeVec
 	if state == states.INACTIVE:
-		visible = OS.get_ticks_msec() % 500 < 250
+		if OS.get_ticks_msec() % 500 < 250:
+			modulate.a = .25
+		else:
+			modulate.a = 1
 
 
 
@@ -144,7 +151,10 @@ func _physics_process(_delta):
 	
 	if state == states.ACTIVE and health <= 0:  #and rand_range(0, 100 / _delta) <= 1:
 		decay()
-	linear_velocity += linear_velocity.normalized() * gradualAccel * accelMultiplier
+	var timeSinceLoad = OS.get_ticks_msec() - sceneLoadTime
+	var accelAdded = accelIncreaseBy * floor(timeSinceLoad / msTillAccelIncrease) + gradualAccel
+	print(accelAdded)
+	linear_velocity += linear_velocity.normalized() * (accelAdded) * accelMultiplier
 	linear_velocity = linear_velocity.clamped(max_speed)
 
 
