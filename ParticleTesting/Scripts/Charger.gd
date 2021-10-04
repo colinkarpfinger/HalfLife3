@@ -11,6 +11,7 @@ const charger_colors = {
 # var a = 2
 # var b = "text"
 
+var col
 var entered = false
 var entered_duration = 0
 var death_length = 2

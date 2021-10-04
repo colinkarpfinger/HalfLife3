@@ -1,14 +1,24 @@
 extends Node2D
 
-#
-const A = Vector2(100, 100)
-const B = Vector2(100, 500)
-const C = Vector2(900, 100)
-const D = Vector2(100, 100)
+const Charger = preload("res://Subscenes/Charger.tscn")
 
+const offset = 100
+
+var spawns = null
+
+var occupied = [0, 0, 0, 0]
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var dimensions = get_viewport().size
+	spawns = [
+		Vector2(offset, offset),
+		Vector2(offset, dimensions.y - offset),
+		Vector2(dimensions.x - offset, offset),
+		Vector2(dimensions.x - offset, dimensions.y - offset)
+	]
+	
+	# Should be able to finish this fairly easily but I'm tired sorry lol
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
