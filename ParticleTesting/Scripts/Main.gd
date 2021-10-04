@@ -1,6 +1,6 @@
 extends Node2D
 
-
+var sceneLoadTime = 0
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -8,6 +8,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	sceneLoadTime = OS.get_ticks_msec()
 	pass
 
 
