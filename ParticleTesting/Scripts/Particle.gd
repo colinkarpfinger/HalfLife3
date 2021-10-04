@@ -23,6 +23,8 @@ var decayOffset = 80
 var numParticlesOnDecay = 2
 var health = startingHealth
 
+onready var burstSprite = load("res://Subscenes/Burst.tscn")
+
 enum colors {RED, YELLOW, GREEN}
 
 enum states {ACTIVE, INACTIVE}
@@ -133,7 +135,15 @@ func decay():
 				color,
 				states.ACTIVE
 			)
+	spawn_burst_vfx(self.global_position)
 	queue_free()
+
+func spawn_burst_vfx(pos):
+	var burst = burstSprite.instance()
+	burst.global_position = pos
+	burst.rotation_degrees = RNG.randf_range(0, 360)
+	get_tree().get_root().add_child(burst)
+	pass
 
 func _slow(beamStrength):
 	if state == states.ACTIVE:

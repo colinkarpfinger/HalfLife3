@@ -24,17 +24,17 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 648.83, 81.3755 )
 
-[sub_resource type="StyleBoxTexture" id=8]
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 8 )
+region_rect = Rect2( 0, 0, 300, 200 )
+
+[sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 8 )
 region_rect = Rect2( 0, 0, 300, 200 )
 
 [sub_resource type="StyleBoxTexture" id=7]
-texture = ExtResource( 8 )
-region_rect = Rect2( 0, 0, 300, 200 )
 
-[sub_resource type="StyleBoxTexture" id=9]
-
-[sub_resource type="StyleBoxTexture" id=5]
+[sub_resource type="StyleBoxTexture" id=8]
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 300, 200 )
 
@@ -118,10 +118,10 @@ margin_left = 765.713
 margin_top = 24.7
 margin_right = 899.713
 margin_bottom = 116.7
-custom_styles/hover = SubResource( 8 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/focus = SubResource( 9 )
-custom_styles/normal = SubResource( 5 )
+custom_styles/hover = SubResource( 5 )
+custom_styles/pressed = SubResource( 6 )
+custom_styles/focus = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
 text = ""
 
 [connection signal="player_died" from="Player" to="Button" method="_on_Player_player_died"]
