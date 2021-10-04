@@ -31,6 +31,7 @@ linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
 slowedDamp = 3.0
+max_speed = 750.0
 startingHealth = 500.0
 accelMultiplier = 4.0
 childSpawnAccel = 2.0
