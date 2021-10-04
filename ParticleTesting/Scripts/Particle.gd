@@ -93,6 +93,7 @@ func _ready():
 
 func _process(_delta):
 	if state == states.ACTIVE:
+		visible = true
 		if decayLevel < 4: 
 			health -= 1 
 		var healthFracCompl = 1 - max(0, health/startingHealth)
@@ -106,6 +107,8 @@ func _process(_delta):
 		shakeVec = (oldShakeVec * shakeVecDecayFactor) + shakeVecIncrement
 		animatedSprite.offset = shakeVec
 		sprite.offset = shakeVec
+	if state == states.INACTIVE:
+		visible = OS.get_ticks_msec() % 500 < 250
 
 
 
