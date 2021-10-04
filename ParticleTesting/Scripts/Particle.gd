@@ -75,7 +75,14 @@ var sounds = [
 		preload("res://Audio/Effects/wobble_3_var_3.wav")
 	]
 ]
-
+var popSounds = [ 
+	preload("res://Audio/Effects/BALLOON_Pop_Real_01_mono.wav"), 
+	preload("res://Audio/Effects/BALLOON_Pop_Real_02_mono.wav"), 
+	preload("res://Audio/Effects/BALLOON_Pop_Real_03_mono.wav"), 
+	preload("res://Audio/Effects/BALLOON_Pop_Real_04_mono.wav"), 
+	preload("res://Audio/Effects/BALLOON_Pop_Deep_01_mono.wav"), 
+	preload("res://Audio/Effects/BALLOON_Pop_Deep_02_mono.wav") ]
+	
 # -----------------------------------------------------------------------------
 
 # Called when the node enters the scene tree for the first time.
@@ -176,9 +183,18 @@ func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 			$CollisionAudio.play()
 
 
+func playPopAudio():
+	#$CollisionAudio.stop()
+	$CollisionAudio.seek(0)
+	$CollisionAudio.volume_db = -15
+	var soundIndex = RNG.randi_range(0, popSounds.size()-1) 
+	$CollisionAudio.stream = popSounds[soundIndex]
+	$CollisionAudio.play()
+	print("playing pop audio")
+
+
 
 func decay():
-	
 	var base_offset = linear_velocity.normalized() * decayOffset
 	
 	var angle_delta = 2 * PI / numParticlesOnDecay
@@ -199,10 +215,24 @@ func decay():
 				color,
 				states.ACTIVE
 			)
+		spawn_burst_vfx(self.global_position)
+		queue_free()
+	
 	else:
 		emit_signal("particle_fully_decayed")
-	spawn_burst_vfx(self.global_position)
+		playPopAudio()
+		$CollisionAudio.connect("finished",self,"destroyRootParticle")
+		$Collider.visible = false
+		if $Collider2:
+			$Collider2.visible = false
+		$Sprites.visible = false
+		state = states.INACTIVE
+		spawn_burst_vfx(self.global_position)
+		
+		
+func destroyRootParticle():
 	queue_free()
+	
 
 func spawn_burst_vfx(pos):
 	var burst = burstSprite.instance()
