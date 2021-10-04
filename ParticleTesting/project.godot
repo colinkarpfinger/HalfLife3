@@ -26,13 +26,19 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Particle"
+config/name="FissionFriends"
 run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://Images/icon.png"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
 
 [global]
 
 import=false
+window=false
 
 [importer_defaults]
 
