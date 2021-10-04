@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/RestartButton.gd" type="Script" id=1]
+
+[node name="Button" type="Button"]
+anchor_right = 0.065
+anchor_bottom = 0.048
+margin_left = 0.256439
+margin_top = -0.128204
+margin_right = 0.696434
+margin_bottom = 0.0717945
+text = "RESTART"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

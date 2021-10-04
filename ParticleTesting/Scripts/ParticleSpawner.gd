@@ -73,10 +73,10 @@ func _on_Timer_timeout():
 	var randomRotationDegrees = rand_range(0,360)
 	spawn_in_center_at_angle(randomRotationDegrees)
 	spawn_count += 1
-	maybe_play_audio()
+	maybe_add_music()
+	
 
-
-func maybe_play_audio():
+func maybe_add_music():
 	if spawn_count >= add_music_particle_threshold_1:
 		basic_drums.volume_db = 0
 		

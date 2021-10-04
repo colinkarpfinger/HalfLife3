@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal player_hit
+signal player_died
 
 export var beamPath := NodePath();
 onready var beam : Beam = get_node(beamPath);
@@ -94,6 +95,7 @@ func _on_Area2D_body_entered(body):
 #health reached 0
 func die():
 	get_tree().queue_delete(self)
+	emit_signal("player_died")
 		
 #math helper functions
 static func lerp_angle(from, to, weight):
