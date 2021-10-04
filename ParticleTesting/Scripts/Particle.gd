@@ -11,8 +11,8 @@ export (float) var max_speed = 1000
 export (float) var max_speed_for_audio = 200
 export (float) var start_scale = 1
 export (int) var startingHealth = 600
-export (float) var shakeAmount = 3
-export (float) var shakeVecDecayFactor = 0.85
+export (float) var shakeAmount = 4
+export (float) var shakeVecDecayFactor = 0.5
 
 onready var RNG = RandomNumberGenerator.new()
 var spawnTime = 0
@@ -81,16 +81,17 @@ func _ready():
 func _process(_delta):
 	if state == states.ACTIVE && decayLevel < 4: 
 		health -= 1 
-	var shakeRange = 1 - max(0, health/startingHealth)
+	var healthFracCompl = 1 - max(0, health/startingHealth)
+	var healthFracCompl2 = healthFracCompl*healthFracCompl
 	var shakeScale = globalScales[decayLevel - 1]
-	var x_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
-	var y_shake = RNG.randfn(0, shakeRange * shakeAmount * shakeScale)
+	var shakeMag = healthFracCompl2*shakeAmount*shakeScale
+	var x_shake = RNG.randfn(0, shakeMag)
+	var y_shake = RNG.randfn(0, shakeMag)
 	var shakeVecIncrement = Vector2(x_shake, y_shake)
-	var oldShakeVector = animatedSprite.offset
-	var newShakeVector = \
-			oldShakeVector * shakeVecDecayFactor + shakeVecIncrement
-	animatedSprite.offset = newShakeVector
-	sprite.offset = newShakeVector
+	var oldShakeVec = shakeVec
+	var shakeVec = (oldShakeVec * shakeVecDecayFactor) + shakeVecIncrement
+	animatedSprite.offset = shakeVec
+	sprite.offset = shakeVec
 
 
 

@@ -64,7 +64,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Sprites"]
 frames = SubResource( 5 )
 animation = "blink"
-frame = 2
+frame = 1
 playing = true
 script = ExtResource( 6 )
 
