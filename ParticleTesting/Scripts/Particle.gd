@@ -29,7 +29,7 @@ var decayLevelMax = 4
 var absoluteScale = 1
 var decayOffset = 80
 var emittingParticles = false
-var gradualAccel = .01
+var gradualAccel = .05
 
 var health : float = startingHealth
 var shakeVec : Vector2 = Vector2(0, 0)

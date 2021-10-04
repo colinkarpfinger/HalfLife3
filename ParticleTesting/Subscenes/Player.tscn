@@ -81,39 +81,39 @@ atlas = ExtResource( 1 )
 region = Rect2( 1024, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 8 )
 region = Rect2( 512, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 7 )
+atlas = ExtResource( 8 )
 region = Rect2( 1024, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 8 )
+atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 8 )
+atlas = ExtResource( 9 )
 region = Rect2( 512, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 8 )
+atlas = ExtResource( 9 )
 region = Rect2( 1024, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 9 )
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 9 )
+atlas = ExtResource( 7 )
 region = Rect2( 512, 0, 512, 512 )
 
 [sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 9 )
+atlas = ExtResource( 7 )
 region = Rect2( 1024, 0, 512, 512 )
 
 [sub_resource type="SpriteFrames" id=26]
@@ -125,17 +125,17 @@ animations = [ {
 }, {
 "frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ) ],
 "loop": true,
-"name": "yellow",
+"name": "green",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ) ],
 "loop": true,
-"name": "green",
+"name": "red",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ],
 "loop": true,
-"name": "red",
+"name": "yellow",
 "speed": 5.0
 } ]
 
@@ -144,7 +144,7 @@ scale = Vector2( 0.5, 0.5 )
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 3 )
-beamPath = NodePath("Beam")
+beamPath = NodePath("BeamAnchor/Node2D/Beam")
 accel_speed = 40.0
 max_speed = 300.0
 drag = 10.0
@@ -154,6 +154,7 @@ animFramerate = 5.0
 [node name="HitDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitDetector"]
+scale = Vector2( 1.09022, 1.12498 )
 shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -165,21 +166,25 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 13 )
 
-[node name="Beam" type="Area2D" parent="."]
+[node name="BeamAnchor" type="Node2D" parent="."]
+
+[node name="Node2D" type="Node2D" parent="BeamAnchor"]
+position = Vector2( 0, -250.771 )
+
+[node name="Beam" type="Area2D" parent="BeamAnchor/Node2D"]
 modulate = Color( 1, 1, 1, 0.784314 )
-scale = Vector2( 1.5, 1.5 )
+scale = Vector2( 1.99383, 2 )
 script = ExtResource( 5 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Beam"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BeamAnchor/Node2D/Beam"]
 polygon = PoolVector2Array( -1.69397, 113.807, -91.4909, -50.0727, 89.7867, -50.6339 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Beam"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="BeamAnchor/Node2D/Beam"]
 modulate = Color( 1, 1, 1, 0.4 )
 position = Vector2( 0, -10.542 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 26 )
 animation = "yellow"
-frame = 1
 speed_scale = 1.636
 playing = true
 
