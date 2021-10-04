@@ -1,4 +1,7 @@
 extends Node2D
+
+var timeMachine;
+
 export var numToSpawn = 200
 export var spawnVelocityMagnitude = 10
 export var maxRotationSpeed = 2
@@ -39,6 +42,8 @@ var snare_and_kick
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	timeMachine = get_node("../TimeMachine")
+
 	setup_audio()
 	randomize()
 	
@@ -74,7 +79,6 @@ func spawn_in_center_at_angle(degrees: float):
 	particle.angular_velocity = maxRotationSpeed
 	
 func _on_Timer_timeout():
-
 	var randomRotationDegrees = rand_range(0,360)
 	spawn_in_center_at_angle(randomRotationDegrees)
 	spawn_count += 1
