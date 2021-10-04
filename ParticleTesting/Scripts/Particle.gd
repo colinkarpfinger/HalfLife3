@@ -86,6 +86,13 @@ var popSounds = [
 	preload("res://Audio/Effects/BALLOON_Pop_Deep_01_mono.wav"), 
 	preload("res://Audio/Effects/BALLOON_Pop_Deep_02_mono.wav") ]
 	
+var popSounds2 = [
+	preload("res://Audio/Effects/wobble_3_var_0.wav"),
+	preload("res://Audio/Effects/wobble_3_var_1.wav"),
+	preload("res://Audio/Effects/wobble_3_var_2.wav"),
+	preload("res://Audio/Effects/wobble_3_var_3.wav")
+	]
+	
 # -----------------------------------------------------------------------------
 
 # Called when the node enters the scene tree for the first time.
@@ -198,9 +205,9 @@ func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 func playPopAudio():
 	#$CollisionAudio.stop()
 	$CollisionAudio.seek(0)
-	$CollisionAudio.volume_db = -25
-	var soundIndex = RNG.randi_range(0, popSounds.size()-1) 
-	$CollisionAudio.stream = popSounds[soundIndex]
+	$CollisionAudio.volume_db = -4
+	var soundIndex = RNG.randi_range(0, popSounds2.size()-1) 
+	$CollisionAudio.stream = popSounds2[soundIndex]
 	$CollisionAudio.play()
 
 
