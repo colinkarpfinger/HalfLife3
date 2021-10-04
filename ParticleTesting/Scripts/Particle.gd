@@ -189,7 +189,7 @@ func playCollisionAudio(rawSpeedFrac: float, rawGain: float):
 func playPopAudio():
 	#$CollisionAudio.stop()
 	$CollisionAudio.seek(0)
-	$CollisionAudio.volume_db = -15
+	$CollisionAudio.volume_db = -25
 	var soundIndex = RNG.randi_range(0, popSounds.size()-1) 
 	$CollisionAudio.stream = popSounds[soundIndex]
 	$CollisionAudio.play()
